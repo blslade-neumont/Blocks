@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class Block : FiniteStateMachine
 {
-    [SerializeField] [Range(50, 5000)] int m_points = 100;
-    [SerializeField] [Range(0.1f, 5.0f)] float m_enterTime = 1.0f;
-    [SerializeField] [Range(0.1f, 1.0f)] float m_hitTime = 0.2f;
+    [SerializeField]
+    [Range(50, 5000)]
+    int m_points = 100;
+    [SerializeField]
+    [Range(0.1f, 5.0f)]
+    float m_enterTime = 1.0f;
+    [SerializeField]
+    [Range(0.1f, 1.0f)]
+    float m_hitTime = 0.2f;
 
     public enum eState
     {
@@ -66,20 +72,26 @@ public class Block : FiniteStateMachine
     {
         transform.position = m_startPosition;
         m_timer = m_enterTime;
+        m_timer += ((transform.position.y - 6) / 16) + Math.Abs(transform.position.x / 50);
     }
 
     private void UpdateENTER()
     {
         m_timer = m_timer - Time.deltaTime;
         m_timer = Mathf.Max(m_timer, 0.0f);
-        //float interp = Interpolation.BounceOut(1.0f - (m_timer / m_enterTime));
-        float interp = 1.0f - (m_timer / m_enterTime);
+        var animProgress = clamp(1.0f - (m_timer / m_enterTime), 0, 1);
+        float interp = Interpolation.BounceOut(animProgress);
+        //float interp = 1.0f - (m_timer / m_enterTime);
         transform.position = Vector3.LerpUnclamped(m_startPosition, m_position, interp);
         
         if (m_timer == 0.0f)
         {
             SetState(eState.ACTIVE);
         }
+    }
+    private float clamp(float val, float min, float max)
+    {
+        return Math.Min(max, Math.Max(val, min));
     }
 
     private void EnterHIT(Enum previousState)
