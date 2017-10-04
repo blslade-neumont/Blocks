@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Ball : FiniteStateMachine
 {
-    [SerializeField][Range(0.0f, 10.0f)] float m_speed = 5.0f;
+    [SerializeField] [Range(0.0f, 10.0f)] public float m_startVelocity = 5.0f;
+    [SerializeField] [Range(-1.0f, 1.0f)] public float m_velocityChange = 0.01f;
 
     public enum eState
     {
@@ -19,9 +20,10 @@ public class Ball : FiniteStateMachine
         STANDARD
     }
 
-    Rigidbody m_rigidbody = null;
-    AudioSource m_audioSource = null;
-    Balls m_owner = null;
+    public Rigidbody m_rigidbody = null;
+    public AudioSource m_audioSource = null;
+    public Balls m_owner = null;
+    public int m_hitCount = 0;
 
     eType m_type = eType.STANDARD;
         
@@ -47,7 +49,7 @@ public class Ball : FiniteStateMachine
         {
             m_rigidbody = GetComponent<Rigidbody>();
         }
-        m_rigidbody.AddForce(direction * (m_speed * 100.0f));
+        m_rigidbody.AddForce(direction * (m_startVelocity * 100.0f));
         m_type = type;
         m_owner = owner;
                 
@@ -64,7 +66,9 @@ public class Ball : FiniteStateMachine
         m_audioSource.Play();
 
         // randomize bounce
-        Quaternion qr = Quaternion.AngleAxis(Random.Range(-10.0f, 10.0f), Vector3.forward);
-        m_rigidbody.velocity = qr * m_rigidbody.velocity;
+        Quaternion qr = Quaternion.AngleAxis(Random.Range(-2.0f, 2.0f), Vector3.forward);
+        var newVel = qr * m_rigidbody.velocity;
+        if (collision.gameObject.CompareTag("Paddle")) newVel *= 1 + m_velocityChange;
+        m_rigidbody.velocity = newVel;
     }
 }

@@ -5,15 +5,11 @@ using UnityEngine;
 
 public class Block : FiniteStateMachine
 {
-    [SerializeField]
-    [Range(50, 5000)]
-    int m_points = 100;
-    [SerializeField]
-    [Range(0.1f, 5.0f)]
-    float m_enterTime = 1.0f;
-    [SerializeField]
-    [Range(0.1f, 1.0f)]
-    float m_hitTime = 0.2f;
+    [SerializeField] [Range(50, 5000)] public int m_points = 100;
+    [SerializeField] [Range(50, 50000)] public int m_maxPoints = 500;
+    [SerializeField] [Range(0.0f, 2.0f)] public float m_bounceModifier = 1.1f;
+    [SerializeField] [Range(0.1f, 5.0f)] public float m_enterTime = 1.0f;
+    [SerializeField] [Range(0.1f, 1.0f)] public float m_hitTime = 0.2f;
 
     public enum eState
     {
@@ -81,7 +77,6 @@ public class Block : FiniteStateMachine
         m_timer = Mathf.Max(m_timer, 0.0f);
         var animProgress = clamp(1.0f - (m_timer / m_enterTime), 0, 1);
         float interp = Interpolation.BounceOut(animProgress);
-        //float interp = 1.0f - (m_timer / m_enterTime);
         transform.position = Vector3.LerpUnclamped(m_startPosition, m_position, interp);
         
         if (m_timer == 0.0f)
@@ -124,6 +119,11 @@ public class Block : FiniteStateMachine
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+            var ball = collision.gameObject.GetComponent<Ball>();
+            var hitCount = ball.m_hitCount++;
+            m_points = (int)(Math.Ceiling((m_points * Math.Pow(m_bounceModifier, (double)hitCount)) / 10) * 10);
+            m_points = Math.Min(m_points, m_maxPoints);
+
             SetState(eState.HIT);
         }
     }

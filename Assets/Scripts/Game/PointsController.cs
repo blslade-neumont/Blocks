@@ -5,6 +5,7 @@ using UnityEngine;
 public class PointsController : MonoBehaviour
 {
     [SerializeField] ObjectPool m_objectPool = null;
+    [SerializeField] Transform m_destination = null;
 
     public void CreatePoints(Vector3 position, int value)
     {
@@ -12,6 +13,7 @@ public class PointsController : MonoBehaviour
         gameObject.transform.SetParent(transform);
         Points points = gameObject.GetComponent<Points>();
         points.Initialize(position, value, this);
+        points.m_destination = this.m_destination;
     }
 
     public void RemovePoints(Points points)
