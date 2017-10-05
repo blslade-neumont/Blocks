@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Game : FiniteStateMachine
 {
-    [SerializeField] Blocks m_blocks = null;
-    [SerializeField] Balls m_balls = null;
-    [SerializeField] Score m_score = null;
-    [SerializeField] PointsController m_points = null;
-    [SerializeField] Transform m_ballStart = null;
+    [SerializeField] public Blocks m_blocks = null;
+    [SerializeField] public Balls m_balls = null;
+    [SerializeField] public Score m_score = null;
+    [SerializeField] public PointsController m_points = null;
+    [SerializeField] public Transform m_ballStart = null;
+    [SerializeField] public GameObject m_title = null;
 
     float m_timer = 0.0f;
-    float m_time = 0.0f;
 
     public enum eState
     {
@@ -46,7 +46,27 @@ public class Game : FiniteStateMachine
 
     void EnterINITIALIZE(System.Enum previous)
     {
-        SetState(eState.START, true);
+        SetState(eState.TITLE, true);
+    }
+
+    void EnterTITLE(System.Enum previous)
+    {
+        if (this.m_title) this.m_title.SetActive(true);
+    }
+
+    void UpdateTITLE()
+    {
+        Debug.Log("You updated!");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("You clicked!");
+            SetState(eState.START);
+        }
+    }
+
+    void ExitTITLE(System.Enum next)
+    {
+        if (this.m_title) this.m_title.SetActive(false);
     }
 
     void EnterSTART(System.Enum previous)
@@ -68,7 +88,7 @@ public class Game : FiniteStateMachine
             SetState(eState.GAME, true);
         }
     }
-
+    
     public void AddPoints(Vector3 position, int value)
     {
         m_points.CreatePoints(position, value);

@@ -107,7 +107,7 @@ public class Block : FiniteStateMachine
             //float interp = Interpolation.BackIn(1.0f - (m_timer / m_hitTime));
             float interp = 1.0f - (m_timer / m_hitTime);
             transform.localScale = Vector3.LerpUnclamped(m_startScale, Vector3.zero, interp);
-                        
+
             yield return null;
         }
         m_owner.RemoveBlock(this);
@@ -119,12 +119,20 @@ public class Block : FiniteStateMachine
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            var ball = collision.gameObject.GetComponent<Ball>();
-            var hitCount = ball.m_hitCount++;
-            m_points = (int)(Math.Ceiling((m_points * Math.Pow(m_bounceModifier, (double)hitCount)) / 10) * 10);
-            m_points = Math.Min(m_points, m_maxPoints);
+            switch (m_type)
+            {
+            case eType.STANDARD:
+                var ball = collision.gameObject.GetComponent<Ball>();
+                var hitCount = ball.m_hitCount++;
+                m_points = (int)(Math.Ceiling((m_points * Math.Pow(m_bounceModifier, (double)hitCount)) / 10) * 10);
+                m_points = Math.Min(m_points, m_maxPoints);
 
-            SetState(eState.HIT);
+                SetState(eState.HIT);
+                break;
+                
+            default:
+                throw new NotImplementedException("Only standard blocks are implemented ATM");
+            }
         }
     }
 }

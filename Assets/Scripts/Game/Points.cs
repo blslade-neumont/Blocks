@@ -17,7 +17,6 @@ public class Points : MonoBehaviour
 
     Vector3 m_startPosition;
     float m_timer = 0.0f;
-    float m_time = 0.0f;
 
     void Start()
     {
@@ -59,7 +58,7 @@ public class Points : MonoBehaviour
             m_timer = m_timer - Time.deltaTime;
             m_timer = Mathf.Max(m_timer, 0.0f);
 
-            float interp = 1.0f - (m_timer / m_idleTime);
+            //float interp = 1.0f - (m_timer / m_idleTime);
 
             yield return null;
         }
@@ -72,7 +71,6 @@ public class Points : MonoBehaviour
             m_timer = Mathf.Max(m_timer, 0.0f);
 
             float interp = 1.0f - (m_timer / m_exitTime);
-            Debug.Log("m_destination:", m_destination);
             if (m_destination)
             {
                 transform.position = Vector3.LerpUnclamped(m_startPosition, m_destination.transform.position, interp);

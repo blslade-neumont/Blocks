@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PointsController : MonoBehaviour
 {
-    [SerializeField] ObjectPool m_objectPool = null;
-    [SerializeField] Transform m_destination = null;
+    [SerializeField] public ObjectPool m_objectPool = null;
+    [SerializeField] public Transform m_destination = null;
 
     public void CreatePoints(Vector3 position, int value)
     {

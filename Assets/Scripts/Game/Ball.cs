@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityRandom = UnityEngine.Random;
 
 public class Ball : FiniteStateMachine
 {
@@ -26,7 +28,7 @@ public class Ball : FiniteStateMachine
     public int m_hitCount = 0;
 
     eType m_type = eType.STANDARD;
-        
+
     void Awake()
     {
         InitializeStateMachine<eState>(eState.INACTIVE, true);
@@ -63,12 +65,19 @@ public class Ball : FiniteStateMachine
 
     private void OnCollisionEnter(Collision collision)
     {
-        m_audioSource.Play();
+        switch (m_type)
+        {
+        case eType.STANDARD:
+            m_audioSource.Play();
 
-        // randomize bounce
-        Quaternion qr = Quaternion.AngleAxis(Random.Range(-2.0f, 2.0f), Vector3.forward);
-        var newVel = qr * m_rigidbody.velocity;
-        if (collision.gameObject.CompareTag("Paddle")) newVel *= 1 + m_velocityChange;
-        m_rigidbody.velocity = newVel;
+            Quaternion qr = Quaternion.AngleAxis(UnityRandom.Range(-2.0f, 2.0f), Vector3.forward);
+            var newVel = qr * m_rigidbody.velocity;
+            if (collision.gameObject.CompareTag("Paddle")) newVel *= 1 + m_velocityChange;
+            m_rigidbody.velocity = newVel;
+            break;
+
+        default:
+            throw new NotImplementedException("Only standard balls are supported ATM");
+        }
     }
 }

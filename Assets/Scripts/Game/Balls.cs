@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Balls : MonoBehaviour
 {
-    [SerializeField] ObjectPool m_objectPool = null;
+    [SerializeField] public ObjectPool m_objectPool = null;
 
     List<Ball> m_balls = new List<Ball>();
 

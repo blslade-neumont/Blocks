@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject m_gameObject;
-    [SerializeField] [Range(0, 200)] private int m_size = 20;
+    [SerializeField] public GameObject m_gameObject;
+    [SerializeField] [Range(0, 200)] public int m_size = 20;
 
     private List<GameObject> m_pool = new List<GameObject>();
 

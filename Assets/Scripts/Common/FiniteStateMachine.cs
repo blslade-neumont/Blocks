@@ -6,7 +6,6 @@ using System.Reflection;
 
 public class FiniteStateMachine : MonoBehaviour
 {
-
     class State
     {
         public Enum id = null;

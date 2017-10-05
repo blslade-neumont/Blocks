@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Blocks : MonoBehaviour
 {
-    [SerializeField] [Range(1, 40)] int m_numColumns = 5;
-    [SerializeField] [Range(1, 40)] int m_numRows = 5;
-    [SerializeField] Transform m_sizeMin = null;
-    [SerializeField] Transform m_sizeMax = null;
-    [SerializeField] ObjectPool m_objectPool = null;
+    [SerializeField] [Range(1, 40)] public int m_numColumns = 5;
+    [SerializeField] [Range(1, 40)] public int m_numRows = 5;
+    [SerializeField] public Transform m_sizeMin = null;
+    [SerializeField] public Transform m_sizeMax = null;
+    [SerializeField] public ObjectPool m_objectPool = null;
     
     List<Block> m_blocks = new List<Block>();
 
