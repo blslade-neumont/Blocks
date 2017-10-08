@@ -44,7 +44,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 21793280437497702, guid: d15b6785ea5bdc74c99def57659f59c8, type: 2}
+  - {fileID: 21015080198270460, guid: a4351eb03cc59f24098d35e6d7c70601, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,8 +91,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 500
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d15b6785ea5bdc74c99def57659f59c8, type: 2}
-  m_sharedMaterial: {fileID: 21793280437497702, guid: d15b6785ea5bdc74c99def57659f59c8,
+  m_fontAsset: {fileID: 11400000, guid: a4351eb03cc59f24098d35e6d7c70601, type: 2}
+  m_sharedMaterial: {fileID: 21015080198270460, guid: a4351eb03cc59f24098d35e6d7c70601,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -117,8 +117,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
