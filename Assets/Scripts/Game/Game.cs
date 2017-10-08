@@ -11,6 +11,8 @@ public class Game : FiniteStateMachine
     [SerializeField] public Transform m_ballStart = null;
     [SerializeField] public GameObject m_title = null;
 
+    [SerializeField] public Paddle m_paddle = null;
+
     float m_timer = 0.0f;
 
     public enum eState
@@ -56,10 +58,9 @@ public class Game : FiniteStateMachine
 
     void UpdateTITLE()
     {
-        Debug.Log("You updated!");
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("You clicked!");
+            this.m_paddle.gameObject.SetActive(true);
             SetState(eState.START);
         }
     }
