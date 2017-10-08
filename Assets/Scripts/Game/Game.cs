@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Game : FiniteStateMachine
 {
@@ -10,9 +11,10 @@ public class Game : FiniteStateMachine
     [SerializeField] public PointsController m_points = null;
     [SerializeField] public Transform m_ballStart = null;
     [SerializeField] public GameObject m_title = null;
-
     [SerializeField] public Paddle m_paddle = null;
     [SerializeField] public GameObject m_scoreDisplay = null;
+    [SerializeField] public GameObject m_gameOver = null;
+    [SerializeField] public TextMeshProUGUI m_gameOverScore = null;
 
     float m_timer = 0.0f;
 
@@ -55,6 +57,8 @@ public class Game : FiniteStateMachine
     void EnterTITLE(System.Enum previous)
     {
         if (this.m_title) this.m_title.SetActive(true);
+        this.m_paddle.gameObject.SetActive(false);
+        this.m_scoreDisplay.gameObject.SetActive(false);
     }
 
     void UpdateTITLE()
@@ -96,5 +100,40 @@ public class Game : FiniteStateMachine
     {
         m_points.CreatePoints(position, value);
         m_score.AddPoints(value);
+    }
+
+    void EnterGAMEOVER(System.Enum previous)
+    {
+        if (this.m_gameOver) this.m_gameOver.SetActive(true);
+        this.m_paddle.gameObject.SetActive(false);
+        this.m_scoreDisplay.gameObject.SetActive(false);
+        m_gameOverScore.text = "Score: " + m_score.score;
+
+        foreach (var block in m_blocks.m_blocks.ToArray())
+        {
+            //block.SetState(Ball.eState.INACTIVE, true);
+            m_blocks.RemoveBlock(block);
+        }
+        foreach (var ball in m_balls.m_balls.ToArray())
+        {
+            //ball.SetState(Ball.eState.INACTIVE, true);
+            m_balls.RemoveBall(ball);
+        }
+        m_points.m_objectPool.Clear();
+    }
+
+    void UpdateGAMEOVER()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            this.m_paddle.gameObject.SetActive(true);
+            this.m_scoreDisplay.gameObject.SetActive(true);
+            SetState(eState.TITLE);
+        }
+    }
+
+    void ExitGAMEOVER(System.Enum next)
+    {
+        if (this.m_gameOver) this.m_gameOver.SetActive(false);
     }
 }

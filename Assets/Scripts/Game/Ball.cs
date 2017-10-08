@@ -9,6 +9,8 @@ public class Ball : FiniteStateMachine
     [SerializeField] [Range(0.0f, 10.0f)] public float m_startVelocity = 5.0f;
     [SerializeField] [Range(-1.0f, 1.0f)] public float m_velocityChange = 0.01f;
 
+    [SerializeField] public Game m_game;
+
     public enum eState
     {
         INACTIVE,
@@ -65,17 +67,27 @@ public class Ball : FiniteStateMachine
 
     private void OnCollisionEnter(Collision collision)
     {
+        var other = collision.gameObject;
         switch (m_type)
         {
         case eType.STANDARD:
-            m_audioSource.Play();
+            if (other.CompareTag("Exit"))
+            {
+                if (this.m_game) this.m_game.SetState(Game.eState.GAMEOVER);
+                Destroy(this.gameObject);
+                break;
+            }
+            else
+            {
+                m_audioSource.Play();
 
-            Quaternion qr = Quaternion.AngleAxis(UnityRandom.Range(-2.0f, 2.0f), Vector3.forward);
-            var newVel = qr * m_rigidbody.velocity;
-            if (collision.gameObject.CompareTag("Paddle")) newVel *= 1 + m_velocityChange;
-            m_rigidbody.velocity = newVel;
-            break;
-
+                Quaternion qr = Quaternion.AngleAxis(UnityRandom.Range(-2.0f, 2.0f), Vector3.forward);
+                var newVel = qr * m_rigidbody.velocity;
+                if (other.CompareTag("Paddle")) newVel *= 1 + m_velocityChange;
+                m_rigidbody.velocity = newVel;
+                break;
+            }
+            
         default:
             throw new NotImplementedException("Only standard balls are supported ATM");
         }

@@ -53,5 +53,13 @@ public class ObjectPool : MonoBehaviour
         gameObject.SetActive(false);
         gameObject.transform.SetParent(transform);
     }
+
+    public void Clear()
+    {
+        foreach (var obj in m_pool.ToArray())
+        {
+            ReturnObject(obj);
+        }
+    }
 }
 

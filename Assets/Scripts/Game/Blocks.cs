@@ -10,7 +10,7 @@ public class Blocks : MonoBehaviour
     [SerializeField] public Transform m_sizeMax = null;
     [SerializeField] public ObjectPool m_objectPool = null;
     
-    List<Block> m_blocks = new List<Block>();
+    public List<Block> m_blocks = new List<Block>();
 
     public void CreateBlocks(string pattern)
     {

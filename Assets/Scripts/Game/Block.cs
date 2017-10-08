@@ -40,6 +40,7 @@ public class Block : FiniteStateMachine
         AddTransitionsToState(eState.ENTER, new System.Enum[] { eState.ACTIVE });
         AddTransitionsToState(eState.ACTIVE, new System.Enum[] { eState.HIT, eState.ENTER });
         AddTransitionsToState(eState.HIT, new System.Enum[] { eState.INACTIVE });
+        m_startScale = transform.localScale;
     }
 
     void Start()
@@ -57,8 +58,8 @@ public class Block : FiniteStateMachine
         m_startPosition.z = m_position.z;
         transform.position = m_startPosition;
 
-        m_startScale = transform.localScale;
-
+        transform.localScale = m_startScale;
+        
         m_owner = owner;
 
         SetState(eState.ENTER);
