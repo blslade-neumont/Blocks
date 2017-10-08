@@ -1626,7 +1626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1231432901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,6 +2359,7 @@ MonoBehaviour:
   m_ballStart: {fileID: 309118209}
   m_title: {fileID: 1566188268}
   m_paddle: {fileID: 1672225638}
+  m_scoreDisplay: {fileID: 1231432900}
 --- !u!1 &1773056859
 GameObject:
   m_ObjectHideFlags: 0

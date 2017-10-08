@@ -12,6 +12,7 @@ public class Game : FiniteStateMachine
     [SerializeField] public GameObject m_title = null;
 
     [SerializeField] public Paddle m_paddle = null;
+    [SerializeField] public GameObject m_scoreDisplay = null;
 
     float m_timer = 0.0f;
 
@@ -61,6 +62,7 @@ public class Game : FiniteStateMachine
         if (Input.GetMouseButtonDown(0))
         {
             this.m_paddle.gameObject.SetActive(true);
+            this.m_scoreDisplay.gameObject.SetActive(true);
             SetState(eState.START);
         }
     }
